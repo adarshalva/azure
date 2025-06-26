@@ -5,6 +5,8 @@
   "scripts": {
     "start": "nodemon --watch ./ --exec ts-node ./server.ts",
     "dev": "ts-node-dev --respawn --transpile-only server.ts"
+    "build": "tsc",    // new added for testing 
+    "test": "jest --coverage"     // new added for testing
   },
   "keywords": [],
   "author": "",
