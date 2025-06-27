@@ -36,47 +36,38 @@
 // })
 // export { getFlights }
 
-import asyncHandler from "express-async-handler";
-import { Request, Response, NextFunction } from "express";
-// import fetch from "node-fetch";
-import Flight from "../models/flight"; // if using DB later
+import asyncHandler from 'express-async-handler';
+import { Request, Response, NextFunction } from 'express';
 
-// GET /api/flights
-export const getFlights = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const { source, airline, route, sort, filterMode, scheduleDate } = req.query;
+const getFlights = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
-  console.log("Incoming query:", req.query);
+    const { airline, route, sort, filterMode, scheduleDate } = req.query;
 
-  let url = `${process.env.FLIGHTS_API_URL}/flights?includedelays=false`;
+    console.log(req.query)
 
-  if (filterMode === "true") {
-    url += `&airline=${airline}&route=${route}`;
-  }
+    let url = '';
 
-  if (sort) url += `&sort=${sort}`;
-  if (scheduleDate) url += `&scheduleDate=${scheduleDate}`;
+    if (filterMode === "true") {
+        url = `${process.env.FLIGHTS_API_URL}/flights?airline=${airline}&route=${route}&includedelays=false&sort=${sort}&scheduleDate=${scheduleDate}`;
+    }
+    else {
+        url = `${process.env.FLIGHTS_API_URL}/flights?includedelays=false&sort=${sort}&scheduleDate=${scheduleDate}`;
+    }
 
-  console.log("Requesting URL:", url);
 
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "ResourceVersion": "v4",
-      "app_id": process.env.FLIGHTS_APP_ID as string,
-      "app_key": process.env.FLIGHTS_APP_KEY as string,
-    },
-  });
+    const response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            'ResourceVersion': 'v4',
+            'app_id': process.env.FLIGHTS_APP_ID as string,
+            'app_key': process.env.FLIGHTS_APP_KEY as string
+        }
+    });
+    const data: any = await response.json();
 
-  const data: any = await response.json();
-  console.log("External API Response:", JSON.stringify(data, null, 2));
+    res.status(200).json({
+        flights: data.flights
+    });
 
-  res.status(200).json({ flights: Array.isArray(data.flights) ? data.flights : [] });
-});
-
-// POST /api/flights
-export const createFlight = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-  // Create a new flight using the Flight model
-  const newFlight = new Flight(req.body);
-  await newFlight.save();
-  res.status(201).json(newFlight);
-});
+})
+export { getFlights }
