@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import { Request, Response, NextFunction } from 'express';
-import fetch from "node-fetch"; // Ensure node-fetch is installed if using fetch in Node
+//import fetch from "node-fetch"; // Ensure node-fetch is installed if using fetch in Node
 import Flight from "../models/flight";
 
 const getFlights = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
