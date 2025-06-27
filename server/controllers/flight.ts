@@ -38,7 +38,7 @@
 
 import asyncHandler from "express-async-handler";
 import { Request, Response, NextFunction } from "express";
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 import Flight from "../models/flight"; // if using DB later
 
 // GET /api/flights
