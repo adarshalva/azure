@@ -164,6 +164,7 @@ export const AccountPopover: FC = () => {
             to="#"
           >
             <ListItemIcon>
+              {/* @ts-ignore */}
               <FiLogOut />
             </ListItemIcon>
             <ListItemText primary="Log out" />
