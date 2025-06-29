@@ -79,6 +79,7 @@ export const AccountPopover: FC = () => {
               sx: { fontSize: '0.61rem !important' }
             }}
           />
+          {/* @ts-ignore */}
           <IoChevronDown />
         </Box>
       </Box>
