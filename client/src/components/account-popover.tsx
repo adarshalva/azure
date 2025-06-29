@@ -142,6 +142,7 @@ export const AccountPopover: FC = () => {
             to="#"
           >
             <ListItemIcon>
+              {/* @ts-ignore */}
               <FaUser />
             </ListItemIcon>
             <ListItemText primary="Account" />
