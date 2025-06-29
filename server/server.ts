@@ -47,9 +47,7 @@ import connectDatabase from "./helpers/database/connect-database";
 import customErrorHandler from "./middlewares/erros/custom-error-handler";
 
 // ✅ Load environment variables from config file
-dotenv.config({
-  path: path.resolve(__dirname, "./config/config.env")
-});
+dotenv.config();
 
 // ✅ Connect to MongoDB
 connectDatabase();
