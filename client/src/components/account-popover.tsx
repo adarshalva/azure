@@ -1,3 +1,4 @@
+/**
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import {
@@ -80,7 +81,7 @@ export const AccountPopover: FC = () => {
             }}
           />
           {/* @ts-ignore */}
-          <IoChevronDown />
+/**          <IoChevronDown />
         </Box>
       </Box>
       <Popover
@@ -143,7 +144,7 @@ export const AccountPopover: FC = () => {
           >
             <ListItemIcon>
               {/* @ts-ignore */}
-              <FaUser />
+/*8              <FaUser />
             </ListItemIcon>
             <ListItemText primary="Account" />
           </ListItem>
@@ -172,3 +173,184 @@ export const AccountPopover: FC = () => {
     </>
   );
 };
+**/
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import {
+  Avatar,
+  Box,
+  Popover,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemIcon,
+} from '@mui/material';
+import { usePopover } from '../hooks/use-popover';
+import { FC } from 'react';
+
+// Fix icons using React.ElementType
+import { FaUser } from "react-icons/fa";
+import { IoChevronDown } from "react-icons/io5";
+import { FiLogOut } from "react-icons/fi";
+import { AiFillRead } from "react-icons/ai";
+
+// Cast to valid JSX components
+const FaUserIcon = FaUser as React.ElementType;
+const IoChevronDownIcon = IoChevronDown as React.ElementType;
+const FiLogOutIcon = FiLogOut as React.ElementType;
+const AiFillReadIcon = AiFillRead as React.ElementType;
+
+export const AccountPopover: FC = () => {
+  const navigate = useNavigate();
+  const [anchorRef, open, handleOpen, handleClose] = usePopover();
+
+  const handleLogout = async () => {
+    try {
+      handleClose();
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong');
+    }
+  };
+
+  return (
+    <>
+      <Box
+        onClick={handleOpen}
+        ref={anchorRef}
+        sx={{
+          alignItems: 'center',
+          cursor: 'pointer',
+          display: 'flex',
+          ml: 1.5,
+          gap: 0.4
+        }}
+      >
+        <Avatar
+          src="/user-joane_smith.png"
+          variant="rounded"
+          sx={{
+            height: 29,
+            width: 29
+          }}
+        />
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: {
+              md: 'flex',
+              xs: 'none'
+            },
+            flex: 1,
+            ml: 1,
+            minWidth: 115,
+            gap: 1.2,
+            '& .MuiTypography-root': {
+              fontSize: 11.3
+            }
+          }}
+        >
+          <ListItemText
+            primary="Joane Smith"
+            secondary="joane@gmail.com"
+            primaryTypographyProps={{
+              sx: { fontSize: '0.745rem !important', fontWeight: 500 }
+            }}
+            secondaryTypographyProps={{
+              sx: { fontSize: '0.61rem !important' }
+            }}
+          />
+          <IoChevronDownIcon />
+        </Box>
+      </Box>
+      <Popover
+        anchorEl={anchorRef.current}
+        anchorOrigin={{
+          horizontal: 'center',
+          vertical: 'bottom',
+        }}
+        sx={{
+          top: 10,
+          left: { md: '-2rem', lg: '-5rem' }
+        }}
+        keepMounted
+        onClose={handleClose}
+        open={open}
+        PaperProps={{
+          sx: {
+            width: 245,
+            display: 'flex',
+            flexDirection: 'column',
+            '& .MuiListItem-root': {
+              px: 1.8,
+              py: 3.2,
+              height: 40,
+            },
+            '& .MuiListItemIcon-root svg': {
+              width: 18,
+              height: 18,
+              ml: 1
+            },
+            '& .MuiListItem-root:not(:last-of-type)': {
+              borderBottom: '1px solid rgba(0,0,0,0.05)'
+            },
+          }
+        }}
+      >
+        <List>
+          <ListItem sx={{ bgcolor: '#f5edfc' }} >
+            <ListItemAvatar>
+              <Avatar
+                variant="rounded"
+                src="/user-joane_smith.png"
+                sx={{ height: 32, width: 32 }}
+              />
+            </ListItemAvatar>
+
+            <ListItemText
+              primary="Joane Smith"
+              secondary="joane@gmail.com"
+            />
+          </ListItem>
+
+          <ListItem
+            component={RouterLink}
+            onClick={handleClose}
+            to="#"
+          >
+            <ListItemIcon>
+              <FaUserIcon />
+            </ListItemIcon>
+            <ListItemText primary="Account" />
+          </ListItem>
+
+          <ListItem
+            component={RouterLink}
+            onClick={handleClose}
+            to="/bookings"
+          >
+            <ListItemIcon>
+              <AiFillReadIcon />
+            </ListItemIcon>
+            <ListItemText primary="My Bookings" />
+          </ListItem>
+
+          <ListItem
+            onClick={handleLogout}
+            component={RouterLink}
+            to="#"
+          >
+            <ListItemIcon>
+              <FiLogOutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Log out" />
+          </ListItem>
+        </List>
+      </Popover>
+    </>
+  );
+};
+
+
