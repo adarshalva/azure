@@ -1,6 +1,6 @@
 import { Autocomplete, TextField, InputAdornment, Icon, Box, Typography } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { FaLocationDot } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa";
 import React from 'react';
 
 interface Option {
