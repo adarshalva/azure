@@ -33,7 +33,8 @@ export const InputSearchField: React.FC<InputSearchFieldProps> = (props) => {
       disabled={disabled}
       renderOption={(props, option) => (
         <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center' }} key={option.iata} id={option.iata}>
-          <span><FaLocationDot color="#4B019B" size={14} /></span>
+          // @ts-ignore
+          <FaLocationDot color="#4B019B" size={14} />
           <Typography variant="body2" color="text.secondary" sx={{ ml: 1.4, paddingY: '4px !important' }} id={option.iata}>
             {`${option.label} - (${option.iata})`}
           </Typography>
